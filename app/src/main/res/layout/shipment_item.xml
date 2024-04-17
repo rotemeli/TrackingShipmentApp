@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/orderNumberTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/shipmentNumberTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/orderNumberTextView"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/shipmentDateTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shipmentNumberTextView"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/shipmentTimeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shipmentDateTextView"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/shipmentStatusTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shipmentTimeTextView"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="16sp" />
+</RelativeLayout>

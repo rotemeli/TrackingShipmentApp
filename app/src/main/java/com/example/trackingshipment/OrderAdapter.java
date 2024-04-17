@@ -9,12 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
     private List<Order> ordersList;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
     public OrderAdapter(List<Order> ordersList) {
         this.ordersList = ordersList;

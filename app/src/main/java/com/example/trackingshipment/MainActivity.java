@@ -44,5 +44,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        viewShipmentsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ViewOrSearchShipmentsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

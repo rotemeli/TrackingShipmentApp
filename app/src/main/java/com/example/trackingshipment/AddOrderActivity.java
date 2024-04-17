@@ -2,6 +2,7 @@ package com.example.trackingshipment;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,10 +19,13 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
 public class AddOrderActivity extends AppCompatActivity {
     private DatabaseReference databaseOrders;
+    private DatabaseReference databaseShipments;
     private TextView orderNumberTxtView;
     private EditText orderDateEdtTxt;
     private EditText itemNumberEdtTxt;
@@ -62,7 +66,10 @@ public class AddOrderActivity extends AppCompatActivity {
         orderStatusEdtTxt = findViewById(R.id.orderStatusEdtTxt);
 //        shipmentNumberTxtView = findViewById(R.id.shipmentNumberTxtView);
         saveOrderBtn = findViewById(R.id.saveOrderBtn);
+
+        // Database Fields
         databaseOrders = FirebaseDatabase.getInstance().getReference("orders");
+        databaseShipments = FirebaseDatabase.getInstance().getReference("shipments");
 
         orderDateEdtTxt.setOnClickListener(v -> showDateDialog(orderDateEdtTxt));
         departureDateEdtTxt.setOnClickListener(v -> showDateDialog(departureDateEdtTxt));
@@ -90,7 +97,16 @@ public class AddOrderActivity extends AppCompatActivity {
                 departureDate, destinationCountry, estimatedArrivalDate, deliveryDate,
                 orderStatus);
 
-        addOrderToDb(order);
+        Intent intent = new Intent(AddOrderActivity.this, AddShipmentActivity.class);
+        intent.putExtra("order_number", order.getOrderNumber());
+        intent.putExtra("shipment_number", order.getShipmentNumber());
+        startActivity(intent);
+
+        String shipmentStatus = "In the warehouse of the origin country";
+        Shipment shipment = new Shipment(order.getOrderNumber(), order.getShipmentNumber(),
+                order.getDepartureDate(), LocalDateTime.now().toString(), shipmentStatus);
+
+        addOrderAndShipmentToDb(order, shipment);
     }
 
     public void showDateDialog(EditText editText) {
@@ -107,13 +123,16 @@ public class AddOrderActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private void addOrderToDb(Order order) {
-        String id = databaseOrders.push().getKey();
+    private void addOrderAndShipmentToDb(Order order, Shipment shipment) {
         String successMessage = "Order Successfully Saved\n" + "Order Number: " + order.getOrderNumber();
         String failMessage = "Failed to add order.";
         databaseOrders.child(order.getOrderNumber()).setValue(order)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, successMessage, Toast.LENGTH_LONG).show();
+
+                    // Add the shipment after added the order
+                    databaseShipments.child(shipment.getShipmentNumber()).setValue(shipment);
+
                     // Close this activity and return to the previous one
                     finish();
                 }).addOnFailureListener(e -> Toast.makeText(this, failMessage, Toast.LENGTH_SHORT).show());

@@ -1,8 +1,10 @@
 package com.example.trackingshipment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,8 +36,9 @@ public class ViewOrSearchOrdersActivity extends AppCompatActivity {
 
         databaseOrders = FirebaseDatabase.getInstance().getReference("orders");
         databaseOrders.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ordersList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Order order = postSnapshot.getValue(Order.class);
@@ -45,7 +48,7 @@ public class ViewOrSearchOrdersActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(ViewOrSearchOrdersActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

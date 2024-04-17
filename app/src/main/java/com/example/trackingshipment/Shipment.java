@@ -5,7 +5,7 @@ import java.util.Date;
 public class Shipment {
     private String orderNumber;
     private String shipmentNumber;
-    private Date shipmentDate;
+    private String shipmentDate;
     private String shipmentTime;
     private String shipmentStatus;
 
@@ -13,7 +13,7 @@ public class Shipment {
         // Default constructor for Firebase
     }
 
-    public Shipment(String orderNumber, String shipmentNumber, Date shipmentDate, String shipmentTime, String shipmentStatus) {
+    public Shipment(String orderNumber, String shipmentNumber, String shipmentDate, String shipmentTime, String shipmentStatus) {
         this.orderNumber = orderNumber;
         this.shipmentNumber = shipmentNumber;
         this.shipmentDate = shipmentDate;
@@ -30,7 +30,7 @@ public class Shipment {
         return shipmentNumber;
     }
 
-    public Date getShipmentDate() {
+    public String getShipmentDate() {
         return shipmentDate;
     }
 
