@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -22,14 +20,11 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 
 public class AddOrderActivity extends AppCompatActivity {
     private DatabaseReference databaseOrders;
 
-    private TextView orderNumberTxtView;
     private EditText orderDateEdtTxt;
     private EditText itemNumberEdtTxt;
     private EditText itemDescriptionEdtTxt;
@@ -39,7 +34,6 @@ public class AddOrderActivity extends AppCompatActivity {
     private EditText estimatedArrivalDateEdtTxt;
     private EditText deliveryDateEdtTxt;
     private Spinner orderStatusSpinner;
-    private Button saveOrderBtn;
     String orderStatus;
 
     @Override
@@ -59,16 +53,13 @@ public class AddOrderActivity extends AppCompatActivity {
         orderStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedTeam = (String) parent.getItemAtPosition(position);
-                orderStatus = selectedTeam;
+                orderStatus = (String) parent.getItemAtPosition(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-
     }
 
     private void initFields() {
@@ -80,7 +71,6 @@ public class AddOrderActivity extends AppCompatActivity {
         destinationCountryEdtTxt = findViewById(R.id.destinationCountryEdtTxt);
         estimatedArrivalDateEdtTxt = findViewById(R.id.estimatedArrivalDateEdtTxt);
         deliveryDateEdtTxt = findViewById(R.id.deliveryDateEdtTxt);
-        saveOrderBtn = findViewById(R.id.saveOrderBtn);
         orderStatusSpinner = findViewById(R.id.orderStatusSpinner);
 
         // Database Fields

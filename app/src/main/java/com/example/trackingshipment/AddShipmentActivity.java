@@ -21,11 +21,8 @@ import java.util.Calendar;
 
 public class AddShipmentActivity extends AppCompatActivity {
     private DatabaseReference databaseShipments;
-    private TextView orderNumberTextView;
-    private TextView shipmentNumberTextView;
     private EditText shipmentDateEdtTxt;
     private EditText shipmentTimeEdtTxt;
-    private Button saveShipmentBtn;
     private Spinner shipmentStatusSpinner;
 
     private String orderNumber, shipmentNumber, shipmentStatus;
@@ -57,11 +54,11 @@ public class AddShipmentActivity extends AppCompatActivity {
     private void initFields() {
         databaseShipments = FirebaseDatabase.getInstance().getReference("shipments");
 
-        orderNumberTextView = findViewById(R.id.orderNumberTextView);
-        shipmentNumberTextView = findViewById(R.id.shipmentNumberTextView);
+        TextView orderNumberTextView = findViewById(R.id.orderNumberTextView);
+        TextView shipmentNumberTextView = findViewById(R.id.shipmentNumberTextView);
         shipmentDateEdtTxt = findViewById(R.id.shipmentDateEdtTxt);
         shipmentTimeEdtTxt = findViewById(R.id.shipmentTimeEdtTxt);
-        saveShipmentBtn = findViewById(R.id.saveShipmentBtn);
+        Button saveShipmentBtn = findViewById(R.id.saveShipmentBtn);
 
         shipmentStatusSpinner = findViewById(R.id.shipmentStatusSpinner);
 

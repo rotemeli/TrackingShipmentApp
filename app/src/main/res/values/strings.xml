@@ -19,4 +19,6 @@
     <string name="shipment_time">Shipment Time</string>
     <string name="shipment_status">Shipment Status: </string>
     <string name="shipment_date">Shipment Date</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
 </resources>

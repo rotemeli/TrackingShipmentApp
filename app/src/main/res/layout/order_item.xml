@@ -79,6 +79,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/orderStatusTextView"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/updateOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shipmentNumberTextView"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="50dp"
+        android:text="@string/update" />
+
+    <Button
+        android:id="@+id/deleteOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shipmentNumberTextView"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="50dp"
+        android:layout_toEndOf="@id/updateOrder"
+        android:text="@string/delete" />
 </RelativeLayout>

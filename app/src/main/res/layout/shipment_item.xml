@@ -40,6 +40,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/shipmentTimeTextView"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/updateShipment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shipmentStatusTextView"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="50dp"
+        android:text="@string/update" />
+
+    <Button
+        android:id="@+id/deleteShipment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shipmentStatusTextView"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="50dp"
+        android:layout_toEndOf="@id/updateShipment"
+        android:text="@string/delete" />
 </RelativeLayout>

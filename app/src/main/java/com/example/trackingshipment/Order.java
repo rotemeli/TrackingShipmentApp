@@ -1,6 +1,5 @@
 package com.example.trackingshipment;
 
-import java.util.Date;
 import java.util.UUID;
 
 public class Order {
@@ -15,10 +14,6 @@ public class Order {
     private String deliveryDate;
     private String orderStatus;
     private String shipmentNumber;
-
-    public Order() {
-        // Default constructor required for calls to DataSnapshot.getValue(Order.class)
-    }
 
     public Order(String orderDate, String itemNumber,
                  String itemDescription, String originCountry, String departureDate,

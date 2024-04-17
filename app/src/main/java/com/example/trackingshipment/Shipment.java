@@ -1,17 +1,11 @@
 package com.example.trackingshipment;
 
-import java.util.Date;
-
 public class Shipment {
     private String orderNumber;
     private String shipmentNumber;
     private String shipmentDate;
     private String shipmentTime;
     private String shipmentStatus;
-
-    public Shipment() {
-        // Default constructor for Firebase
-    }
 
     public Shipment(String orderNumber, String shipmentNumber, String shipmentDate, String shipmentTime, String shipmentStatus) {
         this.orderNumber = orderNumber;
