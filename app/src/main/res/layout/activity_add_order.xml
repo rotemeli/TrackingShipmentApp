@@ -7,15 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".AddOrderActivity">
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/orderNumberTxtView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginHorizontal="20dp"-->
-    <!--        android:layout_marginTop="20dp"-->
-    <!--        android:text="@string/order_number"-->
-    <!--        android:textSize="18sp" />-->
-
     <EditText
         android:id="@+id/orderDateEdtTxt"
         android:layout_width="match_parent"
@@ -103,35 +94,41 @@
         android:inputType="date"
         android:minHeight="48dp" />
 
-    <EditText
-        android:id="@+id/orderStatusEdtTxt"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/orderStatusTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/deliveryDateEdtTxt"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/order_status"
-        android:inputType="text"
-        android:minHeight="48dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:text="@string/order_status"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/shipmentNumberTxtView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@id/orderStatusEdtTxt"-->
-    <!--        android:layout_marginHorizontal="20dp"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:text="@string/shipment_number"-->
-    <!--        android:textSize="18sp" />-->
+    <Spinner
+        android:id="@+id/orderStatusSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/deliveryDateEdtTxt"
+        android:layout_centerVertical="true"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@id/orderStatusTextView"
+        android:minHeight="48dp" />
 
     <Button
         android:id="@+id/saveOrderBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/orderStatusEdtTxt"
+        android:layout_below="@id/orderStatusSpinner"
         android:layout_marginHorizontal="50dp"
         android:layout_marginTop="30dp"
         android:onClick="saveOrderClicked"
         android:text="@string/save" />
-
 </RelativeLayout>

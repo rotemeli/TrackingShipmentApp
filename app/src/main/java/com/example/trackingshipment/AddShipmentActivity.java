@@ -4,9 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,10 +25,10 @@ public class AddShipmentActivity extends AppCompatActivity {
     private TextView shipmentNumberTextView;
     private EditText shipmentDateEdtTxt;
     private EditText shipmentTimeEdtTxt;
-    private EditText shipmentStatusEdtTxt;
     private Button saveShipmentBtn;
+    private Spinner shipmentStatusSpinner;
 
-    private String orderNumber, shipmentNumber;
+    private String orderNumber, shipmentNumber, shipmentStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,19 @@ public class AddShipmentActivity extends AppCompatActivity {
         shipmentNumber = getIntent().getStringExtra("shipment_number");
 
         initFields();
+        loadShipmentStatusSpinner();
+
+        shipmentStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedTeam = (String) parent.getItemAtPosition(position);
+                shipmentStatus = selectedTeam;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void initFields() {
@@ -44,8 +61,9 @@ public class AddShipmentActivity extends AppCompatActivity {
         shipmentNumberTextView = findViewById(R.id.shipmentNumberTextView);
         shipmentDateEdtTxt = findViewById(R.id.shipmentDateEdtTxt);
         shipmentTimeEdtTxt = findViewById(R.id.shipmentTimeEdtTxt);
-        shipmentStatusEdtTxt = findViewById(R.id.shipmentStatusEdtTxt);
         saveShipmentBtn = findViewById(R.id.saveShipmentBtn);
+
+        shipmentStatusSpinner = findViewById(R.id.shipmentStatusSpinner);
 
         shipmentDateEdtTxt.setOnClickListener(v -> showDateDialog(shipmentDateEdtTxt));
 
@@ -69,7 +87,43 @@ public class AddShipmentActivity extends AppCompatActivity {
 
     public void saveShipmentClicked(View view) {
         String shipmentDate = shipmentDateEdtTxt.getText().toString();
+        if (shipmentDate.isEmpty()) {
+            Toast.makeText(this, "Enter an Shipment Date!", Toast.LENGTH_LONG).show();
+            return;
+        }
         String shipmentTime = shipmentTimeEdtTxt.getText().toString();
-        String shipmentStatus = shipmentStatusEdtTxt.getText().toString();
+        if (shipmentTime.isEmpty()) {
+            Toast.makeText(this, "Enter an Shipment Time!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Shipment shipment = new Shipment(orderNumber, shipmentNumber, shipmentDate, shipmentTime, shipmentStatus);
+
+        addShipmentToDb(shipment);
+    }
+
+    private void addShipmentToDb(Shipment shipment) {
+        String successMessage = "Shipment Successfully Saved\n" + "Order Number: " + shipment.getShipmentNumber();
+        String failMessage = "Failed to add order.";
+        databaseShipments.child(shipment.getOrderNumber()).setValue(shipment)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, successMessage, Toast.LENGTH_LONG).show();
+                    // Close this activity and return to the previous one
+                    finish();
+                }).addOnFailureListener(e -> Toast.makeText(this, failMessage, Toast.LENGTH_SHORT).show());
+    }
+
+    private void loadShipmentStatusSpinner() {
+        String[] shipmentStatusValues = new String[]{"Shipping with the local shipping company",
+                "Left the country of origin", "Received by the airline",
+                "Found in the warehouse of the country of origin",
+                "Arrived at the post office of the destination country"};
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, shipmentStatusValues);
+
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        shipmentStatusSpinner.setAdapter(arrayAdapter);
     }
 }
