@@ -7,6 +7,9 @@ public class Shipment {
     private String shipmentTime;
     private String shipmentStatus;
 
+    // No-argument constructor for the firebase
+    public Shipment() { }
+
     public Shipment(String orderNumber, String shipmentNumber, String shipmentDate, String shipmentTime, String shipmentStatus) {
         this.orderNumber = orderNumber;
         this.shipmentNumber = shipmentNumber;

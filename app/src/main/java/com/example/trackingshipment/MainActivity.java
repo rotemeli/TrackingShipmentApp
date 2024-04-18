@@ -6,6 +6,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,5 +32,19 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, ViewOrSearchShipmentsActivity.class);
             startActivity(intent);
         });
+    }
+
+    // Help function for generating a random number that contains 10 digits
+    public static String generateTenDigitNumber() {
+        Random random = new Random();
+        StringBuilder number = new StringBuilder();
+
+        // Loop to generate each digit
+        for (int i = 0; i < 10; i++) {
+            int digit = random.nextInt(10);
+            number.append(digit);
+        }
+
+        return number.toString();
     }
 }

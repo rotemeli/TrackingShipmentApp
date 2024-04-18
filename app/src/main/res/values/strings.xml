@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">TrackingShipment</string>
     <string name="add_shipment">Add Shipment</string>
-    <string name="view_search_orders">View/Search Orders</string>
-    <string name="view_search_shipments">View/Search Shipments</string>
+    <string name="view_search_orders">View / Search Orders</string>
+    <string name="view_search_shipments">View / Search Shipments</string>
     <string name="add_order">Add Order</string>
     <string name="save">Save</string>
     <string name="shipment_number">Shipment Number: </string>
@@ -21,4 +21,8 @@
     <string name="shipment_date">Shipment Date</string>
     <string name="delete">Delete</string>
     <string name="update">Update</string>
+    <string name="search_order">Search Order</string>
+    <string name="enter_order_number">Enter an order number</string>
+    <string name="enter_shipment_number">Enter an shipment number</string>
+    <string name="search">Search</string>
 </resources>

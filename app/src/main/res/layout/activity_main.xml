@@ -12,29 +12,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="200dp"
         android:text="@string/add_order" />
 
     <Button
         android:id="@+id/viewOrdersBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/addOrderBtn"
-        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
         android:text="@string/view_search_orders" />
-
 
     <Button
         android:id="@+id/viewShipmentsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/viewOrdersBtn"
-        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
         android:text="@string/view_search_shipments" />
-
 </RelativeLayout>

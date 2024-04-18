@@ -2,6 +2,8 @@ package com.example.trackingshipment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,22 +21,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewOrSearchOrdersActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
     private OrderAdapter adapter;
-    private List<Order> ordersList = new ArrayList<>();
-    private DatabaseReference databaseOrders;
+    private List<Order> ordersList;
+    private List<Order> filteredList;
+    private EditText searchOrderEdtTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_or_search_orders);
 
-        recyclerView = findViewById(R.id.ordersRecyclerView);
+        ordersList = new ArrayList<>();
+        filteredList = new ArrayList<>();
+        Button searchOrderBtn = findViewById(R.id.searchOrderBtn);
+        searchOrderEdtTxt = findViewById(R.id.searchOrderEdtTxt);
+
+        RecyclerView recyclerView = findViewById(R.id.ordersRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new OrderAdapter(ordersList);
         recyclerView.setAdapter(adapter);
 
-        databaseOrders = FirebaseDatabase.getInstance().getReference("orders");
+        DatabaseReference databaseOrders = FirebaseDatabase.getInstance().getReference("orders");
         databaseOrders.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -44,12 +51,28 @@ public class ViewOrSearchOrdersActivity extends AppCompatActivity {
                     Order order = postSnapshot.getValue(Order.class);
                     ordersList.add(order);
                 }
-                adapter.notifyDataSetChanged();
+                // Update the adapter data
+                adapter.updateOrdersData(ordersList);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(ViewOrSearchOrdersActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        searchOrderBtn.setOnClickListener(v -> {
+            String searchQuery = searchOrderEdtTxt.getText().toString().trim();
+            if (!searchQuery.isEmpty()) {
+                filteredList.clear();
+                for (Order order : ordersList) {
+                    if (!order.getOrderNumber().isEmpty() && order.getOrderNumber().contains(searchQuery)) {
+                        filteredList.add(order);
+                    }
+                }
+                adapter.updateOrdersData(filteredList);
+            } else {
+                adapter.updateOrdersData(ordersList); // Reset to original list if search is empty
             }
         });
     }

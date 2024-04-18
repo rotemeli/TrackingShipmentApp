@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,8 +23,8 @@ public class AddShipmentActivity extends AppCompatActivity {
     private EditText shipmentDateEdtTxt;
     private EditText shipmentTimeEdtTxt;
     private Spinner shipmentStatusSpinner;
-
-    private String orderNumber, shipmentNumber, shipmentStatus;
+    private String orderNumber, shipmentNumber;
+    private String shipmentStatus = "Select";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +40,10 @@ public class AddShipmentActivity extends AppCompatActivity {
         shipmentStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedTeam = (String) parent.getItemAtPosition(position);
-                shipmentStatus = selectedTeam;
+                String selectedShipmentStatus = (String) parent.getItemAtPosition(position);
+                if(!selectedShipmentStatus.equals("Select")) {
+                    shipmentStatus = selectedShipmentStatus;
+                }
             }
 
             @Override
@@ -58,7 +59,6 @@ public class AddShipmentActivity extends AppCompatActivity {
         TextView shipmentNumberTextView = findViewById(R.id.shipmentNumberTextView);
         shipmentDateEdtTxt = findViewById(R.id.shipmentDateEdtTxt);
         shipmentTimeEdtTxt = findViewById(R.id.shipmentTimeEdtTxt);
-        Button saveShipmentBtn = findViewById(R.id.saveShipmentBtn);
 
         shipmentStatusSpinner = findViewById(R.id.shipmentStatusSpinner);
 
@@ -94,6 +94,13 @@ public class AddShipmentActivity extends AppCompatActivity {
             return;
         }
 
+        if(shipmentStatus.equals("Select")) {
+            Toast.makeText(this, "Select an Shipment Status!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+
         Shipment shipment = new Shipment(orderNumber, shipmentNumber, shipmentDate, shipmentTime, shipmentStatus);
 
         addShipmentToDb(shipment);
@@ -102,7 +109,7 @@ public class AddShipmentActivity extends AppCompatActivity {
     private void addShipmentToDb(Shipment shipment) {
         String successMessage = "Shipment Successfully Saved\n" + "Order Number: " + shipment.getShipmentNumber();
         String failMessage = "Failed to add order.";
-        databaseShipments.child(shipment.getOrderNumber()).setValue(shipment)
+        databaseShipments.child(shipment.getShipmentNumber()).setValue(shipment)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, successMessage, Toast.LENGTH_LONG).show();
                     // Close this activity and return to the previous one
@@ -111,7 +118,7 @@ public class AddShipmentActivity extends AppCompatActivity {
     }
 
     private void loadShipmentStatusSpinner() {
-        String[] shipmentStatusValues = new String[]{"Shipping with the local shipping company",
+        String[] shipmentStatusValues = new String[]{"Select", "Shipping with the local shipping company",
                 "Left the country of origin", "Received by the airline",
                 "Found in the warehouse of the country of origin",
                 "Arrived at the post office of the destination country"};

@@ -1,5 +1,6 @@
 package com.example.trackingshipment;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -17,7 +19,7 @@ public class ShipmentAdapter extends RecyclerView.Adapter<ShipmentAdapter.Shipme
 
 
     public ShipmentAdapter(List<Shipment> shipmentList) {
-        this.shipmentList = shipmentList;
+        this.shipmentList = new ArrayList<>(shipmentList);
     }
 
     @NonNull
@@ -31,17 +33,23 @@ public class ShipmentAdapter extends RecyclerView.Adapter<ShipmentAdapter.Shipme
         Shipment shipment = shipmentList.get(position);
 
         // Displaying other details
-        holder.orderNumberTextView.setText("Shipment Order ID: " + shipment.getOrderNumber());
+        holder.orderNumberTextView.setText("Order Number: " + shipment.getOrderNumber());
         holder.shipmentNumberTextView.setText("Shipment Number: " + shipment.getShipmentNumber());
         holder.shipmentDateTextView.setText("Shipment Date: " + shipment.getShipmentDate());
         holder.shipmentTimeTextView.setText("Shipment Time: " + shipment.getShipmentTime());
         holder.shipmentStatusTextView.setText("Status: " + shipment.getShipmentStatus());
-
     }
 
     @Override
     public int getItemCount() {
         return shipmentList.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateShipmentsData(List<Shipment> newShipments) {
+        this.shipmentList.clear();
+        this.shipmentList.addAll(newShipments);
+        notifyDataSetChanged();
     }
 
     class ShipmentViewHolder extends RecyclerView.ViewHolder {

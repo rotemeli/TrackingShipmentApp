@@ -34,7 +34,7 @@ public class AddOrderActivity extends AppCompatActivity {
     private EditText estimatedArrivalDateEdtTxt;
     private EditText deliveryDateEdtTxt;
     private Spinner orderStatusSpinner;
-    String orderStatus;
+    private String orderStatus = "Select";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,10 @@ public class AddOrderActivity extends AppCompatActivity {
         orderStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                orderStatus = (String) parent.getItemAtPosition(position);
+                String selectedOrderStatus = (String) parent.getItemAtPosition(position);
+                if(!selectedOrderStatus.equals("Select")) {
+                    orderStatus = selectedOrderStatus;
+                }
             }
 
             @Override
@@ -124,6 +127,12 @@ public class AddOrderActivity extends AppCompatActivity {
             return;
         }
 
+        if(orderStatus.equals("Select")) {
+            Toast.makeText(this, "Select an Order Status!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // Creates new order
         Order order = new Order(orderDate, itemNumber, itemDescription, originCountry,
                 departureDate, destinationCountry, estimatedArrivalDate, deliveryDate,
                 orderStatus);
@@ -164,7 +173,7 @@ public class AddOrderActivity extends AppCompatActivity {
     }
 
     private void loadOrderStatusSpinner() {
-        String[] orderStatusValues = new String[]{"Opened", "Ready To Ship", "Sent",
+        String[] orderStatusValues = new String[]{"Select", "Opened", "Ready To Ship", "Sent",
                 "Reached The Destination", "Received"};
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(this,

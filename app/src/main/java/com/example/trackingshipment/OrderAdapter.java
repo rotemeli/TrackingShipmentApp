@@ -1,5 +1,6 @@
 package com.example.trackingshipment;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -8,13 +9,14 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
     private List<Order> ordersList;
 
     public OrderAdapter(List<Order> ordersList) {
-        this.ordersList = ordersList;
+        this.ordersList = new ArrayList<>(ordersList);
     }
 
     @NonNull
@@ -29,13 +31,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         Order order = ordersList.get(position);
 
         // Displaying other details
-        holder.orderNumberTextView.setText("Order #: " + order.getOrderNumber());
+        holder.orderNumberTextView.setText("Order Number: " + order.getOrderNumber());
         holder.itemNumberTextView.setText("Item Number: " + order.getItemNumber());
         holder.itemDescriptionTextView.setText("Item: " + order.getItemDescription());
         holder.originCountryTextView.setText("Origin: " + order.getOriginCountry());
         holder.destinationCountryTextView.setText("Destination: " + order.getDestinationCountry());
         holder.orderStatusTextView.setText("Status: " + order.getOrderStatus());
-        holder.shipmentNumberTextView.setText("Shipment #: " + order.getShipmentNumber());
+        holder.shipmentNumberTextView.setText("Shipment Number: " + order.getShipmentNumber());
 
 
         // Date details
@@ -67,6 +69,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     @Override
     public int getItemCount() {
         return ordersList.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateOrdersData(List<Order> newOrders) {
+        this.ordersList.clear();
+        this.ordersList.addAll(newOrders);
+        notifyDataSetChanged();
     }
 
     class OrderViewHolder extends RecyclerView.ViewHolder {

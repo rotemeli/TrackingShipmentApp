@@ -4,17 +4,18 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/orderNumberTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp" />
-
-    <TextView
         android:id="@+id/shipmentNumberTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/orderNumberTextView"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/orderNumberTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shipmentNumberTextView"
         android:layout_marginTop="10dp"
         android:textSize="16sp" />
 
@@ -22,7 +23,7 @@
         android:id="@+id/shipmentDateTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/shipmentNumberTextView"
+        android:layout_below="@id/orderNumberTextView"
         android:layout_marginTop="10dp"
         android:textSize="16sp" />
 
@@ -48,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/shipmentStatusTextView"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="95dp"
         android:layout_marginBottom="50dp"
         android:text="@string/update" />
 

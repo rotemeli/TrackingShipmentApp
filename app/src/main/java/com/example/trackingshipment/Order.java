@@ -1,6 +1,5 @@
 package com.example.trackingshipment;
 
-import java.util.UUID;
 
 public class Order {
     private String orderNumber;
@@ -15,11 +14,15 @@ public class Order {
     private String orderStatus;
     private String shipmentNumber;
 
+    // No-argument constructor for the firebase
+    public Order() {
+    }
+
     public Order(String orderDate, String itemNumber,
                  String itemDescription, String originCountry, String departureDate,
                  String destinationCountry, String estimatedArrivalDate, String deliveryDate,
                  String orderStatus) {
-        this.orderNumber = UUID.randomUUID().toString();
+        this.orderNumber = MainActivity.generateTenDigitNumber();
         this.orderDate = orderDate;
         this.itemNumber = itemNumber;
         this.itemDescription = itemDescription;
@@ -29,7 +32,7 @@ public class Order {
         this.estimatedArrivalDate = estimatedArrivalDate;
         this.deliveryDate = deliveryDate;
         this.orderStatus = orderStatus;
-        this.shipmentNumber = UUID.randomUUID().toString();
+        this.shipmentNumber = MainActivity.generateTenDigitNumber();
     }
 
     // Getters
