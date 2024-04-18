@@ -79,4 +79,14 @@ public class Order {
     public String getShipmentNumber() {
         return shipmentNumber;
     }
+
+    // Setters
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public void setShipmentNumber(String shipmentNumber) {
+        this.shipmentNumber = shipmentNumber;
+    }
 }

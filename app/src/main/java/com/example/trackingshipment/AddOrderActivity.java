@@ -25,6 +25,8 @@ import java.util.Calendar;
 public class AddOrderActivity extends AppCompatActivity {
     private DatabaseReference databaseOrders;
 
+    private String orderNumber;
+    private String shipmentNumber;
     private EditText orderDateEdtTxt;
     private EditText itemNumberEdtTxt;
     private EditText itemDescriptionEdtTxt;
@@ -47,14 +49,16 @@ public class AddOrderActivity extends AppCompatActivity {
             return insets;
         });
 
+        orderStatusSpinner = findViewById(R.id.orderStatusSpinner);
+        loadOrderStatusSpinner();
         initFields();
 
-        loadOrderStatusSpinner();
+
         orderStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedOrderStatus = (String) parent.getItemAtPosition(position);
-                if(!selectedOrderStatus.equals("Select")) {
+                if (!selectedOrderStatus.equals("Select")) {
                     orderStatus = selectedOrderStatus;
                 }
             }
@@ -74,7 +78,6 @@ public class AddOrderActivity extends AppCompatActivity {
         destinationCountryEdtTxt = findViewById(R.id.destinationCountryEdtTxt);
         estimatedArrivalDateEdtTxt = findViewById(R.id.estimatedArrivalDateEdtTxt);
         deliveryDateEdtTxt = findViewById(R.id.deliveryDateEdtTxt);
-        orderStatusSpinner = findViewById(R.id.orderStatusSpinner);
 
         // Database Fields
         databaseOrders = FirebaseDatabase.getInstance().getReference("orders");
@@ -83,6 +86,29 @@ public class AddOrderActivity extends AppCompatActivity {
         departureDateEdtTxt.setOnClickListener(v -> showDateDialog(departureDateEdtTxt));
         estimatedArrivalDateEdtTxt.setOnClickListener(v -> showDateDialog(estimatedArrivalDateEdtTxt));
         deliveryDateEdtTxt.setOnClickListener(v -> showDateDialog(deliveryDateEdtTxt));
+
+        // Check if extras are provided, indicating an update situation
+        if (getIntent().hasExtra("order_date")) {
+            orderDateEdtTxt.setText(getIntent().getStringExtra("order_date"));
+            itemNumberEdtTxt.setText(getIntent().getStringExtra("item_number"));
+            itemDescriptionEdtTxt.setText(getIntent().getStringExtra("item_description"));
+            originCountryEdtTxt.setText(getIntent().getStringExtra("origin_country"));
+            departureDateEdtTxt.setText(getIntent().getStringExtra("departure_date"));
+            destinationCountryEdtTxt.setText(getIntent().getStringExtra("destination_country"));
+            estimatedArrivalDateEdtTxt.setText(getIntent().getStringExtra("estimated_arrival_date"));
+            deliveryDateEdtTxt.setText(getIntent().getStringExtra("delivery_date"));
+
+            orderNumber = getIntent().getStringExtra("order_number");
+            shipmentNumber = getIntent().getStringExtra("shipment_number");
+
+            String orderStatus = getIntent().getStringExtra("order_status");
+            if (orderStatus != null && orderStatusSpinner.getAdapter() != null) {
+                int spinnerPosition = ((ArrayAdapter<String>) orderStatusSpinner.getAdapter()).getPosition(orderStatus);
+                if (spinnerPosition >= 0) {  // Check if the status exists in the adapter
+                    orderStatusSpinner.setSelection(spinnerPosition);
+                }
+            }
+        }
     }
 
     public void saveOrderClicked(View view) {
@@ -127,15 +153,27 @@ public class AddOrderActivity extends AppCompatActivity {
             return;
         }
 
-        if(orderStatus.equals("Select")) {
+        if (orderStatus.equals("Select")) {
             Toast.makeText(this, "Select an Order Status!", Toast.LENGTH_LONG).show();
             return;
         }
+
 
         // Creates new order
         Order order = new Order(orderDate, itemNumber, itemDescription, originCountry,
                 departureDate, destinationCountry, estimatedArrivalDate, deliveryDate,
                 orderStatus);
+
+
+        // Checks If the order is in update mode, Otherwise continue to make a shipment
+        if (getIntent().hasExtra("order_date")) {
+            order.setOrderNumber(orderNumber);
+            order.setShipmentNumber(shipmentNumber);
+            addOrderToDb(order);
+            Toast.makeText(this, "Order Updated!", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
 
         // Creates a shipment for the specific order
         Intent intent = new Intent(AddOrderActivity.this, AddShipmentActivity.class);
@@ -165,8 +203,9 @@ public class AddOrderActivity extends AppCompatActivity {
         String failMessage = "Failed to add order.";
         databaseOrders.child(order.getOrderNumber()).setValue(order)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, successMessage, Toast.LENGTH_LONG).show();
-
+                    if (!getIntent().hasExtra("order_date")) {
+                        Toast.makeText(this, successMessage, Toast.LENGTH_LONG).show();
+                    }
                     // Close this activity and return to the previous one
                     finish();
                 }).addOnFailureListener(e -> Toast.makeText(this, failMessage, Toast.LENGTH_SHORT).show());

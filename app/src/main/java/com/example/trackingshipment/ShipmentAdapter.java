@@ -52,7 +52,7 @@ public class ShipmentAdapter extends RecyclerView.Adapter<ShipmentAdapter.Shipme
         notifyDataSetChanged();
     }
 
-    class ShipmentViewHolder extends RecyclerView.ViewHolder {
+    protected static class ShipmentViewHolder extends RecyclerView.ViewHolder {
         TextView orderNumberTextView, shipmentNumberTextView, shipmentDateTextView,
                 shipmentTimeTextView, shipmentStatusTextView;
 
