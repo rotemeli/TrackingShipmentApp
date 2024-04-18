@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
-    private List<Order> ordersList;
+    private final List<Order> ordersList;
 
     public OrderAdapter(List<Order> ordersList) {
         this.ordersList = new ArrayList<>(ordersList);
@@ -33,6 +33,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         return new OrderViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         Order order = ordersList.get(position);
@@ -73,6 +74,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         }
     }
 
+    // Getter
     @Override
     public int getItemCount() {
         return ordersList.size();
@@ -85,6 +87,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         notifyDataSetChanged();
     }
 
+    // Order View holder inner class
     protected class OrderViewHolder extends RecyclerView.ViewHolder {
         TextView orderNumberTextView, itemDescriptionTextView, orderStatusTextView, orderDateTextView,
                 originCountryTextView, departureDateTextView, destinationCountryTextView,
@@ -93,6 +96,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
         Button updateButton, deleteButton;
 
+        // Constructor
         public OrderViewHolder(View itemView) {
             super(itemView);
             orderNumberTextView = itemView.findViewById(R.id.orderNumberTextView);
@@ -127,6 +131,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             });
         }
 
+        // Update an order
         private void updateOrder(Order order) {
             Context context = itemView.getContext();
             Intent intent = new Intent(context, AddOrderActivity.class);
@@ -144,6 +149,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             context.startActivity(intent);
         }
 
+        // Delete an order
         private void deleteOrder(Order order, int position) {
             // Validate position and order match
             if (position < 0 || position >= ordersList.size() || !ordersList.get(position).getOrderNumber().equals(order.getOrderNumber())) {

@@ -11,11 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -41,19 +37,14 @@ public class AddOrderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_order);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         orderStatusSpinner = findViewById(R.id.orderStatusSpinner);
         loadOrderStatusSpinner();
         initFields();
 
 
+        // Change selected item listener
         orderStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -87,7 +78,7 @@ public class AddOrderActivity extends AppCompatActivity {
         estimatedArrivalDateEdtTxt.setOnClickListener(v -> showDateDialog(estimatedArrivalDateEdtTxt));
         deliveryDateEdtTxt.setOnClickListener(v -> showDateDialog(deliveryDateEdtTxt));
 
-        // Check if extras are provided, indicating an update situation
+        // Check if extras are provided
         if (getIntent().hasExtra("order_date")) {
             orderDateEdtTxt.setText(getIntent().getStringExtra("order_date"));
             itemNumberEdtTxt.setText(getIntent().getStringExtra("item_number"));
@@ -104,14 +95,17 @@ public class AddOrderActivity extends AppCompatActivity {
             String orderStatus = getIntent().getStringExtra("order_status");
             if (orderStatus != null && orderStatusSpinner.getAdapter() != null) {
                 int spinnerPosition = ((ArrayAdapter<String>) orderStatusSpinner.getAdapter()).getPosition(orderStatus);
-                if (spinnerPosition >= 0) {  // Check if the status exists in the adapter
+                // Check if the status exists in the adapter
+                if (spinnerPosition >= 0) {
                     orderStatusSpinner.setSelection(spinnerPosition);
                 }
             }
         }
     }
 
+    // Save button on click listener
     public void saveOrderClicked(View view) {
+        // Checks validations for all fields
         String orderDate = orderDateEdtTxt.getText().toString();
         if (orderDate.isEmpty()) {
             Toast.makeText(this, "Enter an Order Date!", Toast.LENGTH_LONG).show();
@@ -158,12 +152,10 @@ public class AddOrderActivity extends AppCompatActivity {
             return;
         }
 
-
         // Creates new order
         Order order = new Order(orderDate, itemNumber, itemDescription, originCountry,
                 departureDate, destinationCountry, estimatedArrivalDate, deliveryDate,
                 orderStatus);
-
 
         // Checks If the order is in update mode, Otherwise continue to make a shipment
         if (getIntent().hasExtra("order_date")) {
@@ -184,6 +176,7 @@ public class AddOrderActivity extends AppCompatActivity {
         addOrderToDb(order);
     }
 
+    // Display the date dialog to edit text
     public void showDateDialog(EditText editText) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -198,6 +191,7 @@ public class AddOrderActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    // A function that adds an order to the database
     private void addOrderToDb(Order order) {
         String successMessage = "Order Successfully Saved\n" + "Order Number: " + order.getOrderNumber();
         String failMessage = "Failed to add order.";
@@ -211,6 +205,8 @@ public class AddOrderActivity extends AppCompatActivity {
                 }).addOnFailureListener(e -> Toast.makeText(this, failMessage, Toast.LENGTH_SHORT).show());
     }
 
+
+    // Initialization of the order status spinner
     private void loadOrderStatusSpinner() {
         String[] orderStatusValues = new String[]{"Select", "Opened", "Ready To Ship", "Sent",
                 "Reached The Destination", "Received"};

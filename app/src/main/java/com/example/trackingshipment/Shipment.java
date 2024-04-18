@@ -8,8 +8,10 @@ public class Shipment {
     private String shipmentStatus;
 
     // No-argument constructor for the firebase
-    public Shipment() { }
+    public Shipment() {
+    }
 
+    // Constructor
     public Shipment(String orderNumber, String shipmentNumber, String shipmentDate, String shipmentTime, String shipmentStatus) {
         this.orderNumber = orderNumber;
         this.shipmentNumber = shipmentNumber;
@@ -38,5 +40,13 @@ public class Shipment {
     public String getShipmentStatus() {
         return shipmentStatus;
     }
-}
 
+    // Setters
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public void setShipmentNumber(String shipmentNumber) {
+        this.shipmentNumber = shipmentNumber;
+    }
+}

@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         Button viewOrdersBtn = findViewById(R.id.viewOrdersBtn);
         Button viewShipmentsBtn = findViewById(R.id.viewShipmentsBtn);
 
+        // Buttons on click listeners
         addOrderBtn.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddOrderActivity.class);
             startActivity(intent);

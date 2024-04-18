@@ -61,6 +61,8 @@ public class ViewOrSearchOrdersActivity extends AppCompatActivity {
             }
         });
 
+
+        // Search button on click listener
         searchOrderBtn.setOnClickListener(v -> {
             String searchQuery = searchOrderEdtTxt.getText().toString().trim();
             if (!searchQuery.isEmpty()) {

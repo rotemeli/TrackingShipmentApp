@@ -18,6 +18,7 @@ public class Order {
     public Order() {
     }
 
+    // Constructor
     public Order(String orderDate, String itemNumber,
                  String itemDescription, String originCountry, String departureDate,
                  String destinationCountry, String estimatedArrivalDate, String deliveryDate,
@@ -81,7 +82,6 @@ public class Order {
     }
 
     // Setters
-
     public void setOrderNumber(String orderNumber) {
         this.orderNumber = orderNumber;
     }

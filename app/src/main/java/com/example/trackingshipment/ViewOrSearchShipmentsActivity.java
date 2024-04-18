@@ -60,6 +60,7 @@ public class ViewOrSearchShipmentsActivity extends AppCompatActivity {
             }
         });
 
+        // Search button on click listener
         searchShipmentBtn.setOnClickListener(v -> {
             String searchQuery = searchShipmentEdtTxt.getText().toString().trim();
             if (!searchQuery.isEmpty()) {

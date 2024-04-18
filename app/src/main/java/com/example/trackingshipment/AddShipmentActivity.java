@@ -34,9 +34,11 @@ public class AddShipmentActivity extends AppCompatActivity {
         orderNumber = getIntent().getStringExtra("order_number");
         shipmentNumber = getIntent().getStringExtra("shipment_number");
 
-        initFields();
+        shipmentStatusSpinner = findViewById(R.id.shipmentStatusSpinner);
         loadShipmentStatusSpinner();
+        initFields();
 
+        // Change selected item listener
         shipmentStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -60,14 +62,30 @@ public class AddShipmentActivity extends AppCompatActivity {
         shipmentDateEdtTxt = findViewById(R.id.shipmentDateEdtTxt);
         shipmentTimeEdtTxt = findViewById(R.id.shipmentTimeEdtTxt);
 
-        shipmentStatusSpinner = findViewById(R.id.shipmentStatusSpinner);
-
         shipmentDateEdtTxt.setOnClickListener(v -> showDateDialog(shipmentDateEdtTxt));
+
+        // Check if extras are provided
+        if (getIntent().hasExtra("shipment_date")) {
+            orderNumber = getIntent().getStringExtra("order_number");
+            shipmentNumber = getIntent().getStringExtra("shipment_number");
+            shipmentDateEdtTxt.setText(getIntent().getStringExtra("shipment_date"));
+            shipmentTimeEdtTxt.setText(getIntent().getStringExtra("shipment_time"));
+
+            String shipmentStatus = getIntent().getStringExtra("shipment_status");
+            if (shipmentStatus != null && shipmentStatusSpinner.getAdapter() != null) {
+                int spinnerPosition = ((ArrayAdapter<String>) shipmentStatusSpinner.getAdapter()).getPosition(shipmentStatus);
+                // Check if the status exists in the adapter
+                if (spinnerPosition >= 0) {
+                    shipmentStatusSpinner.setSelection(spinnerPosition);
+                }
+            }
+        }
 
         orderNumberTextView.setText("Order Number: " + orderNumber);
         shipmentNumberTextView.setText("Shipment Number: " + shipmentNumber);
     }
 
+    // Display the date dialog to edit text
     private void showDateDialog(EditText editText) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -82,7 +100,9 @@ public class AddShipmentActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    // Save button on click listener
     public void saveShipmentClicked(View view) {
+        // Checks validations for all fields
         String shipmentDate = shipmentDateEdtTxt.getText().toString();
         if (shipmentDate.isEmpty()) {
             Toast.makeText(this, "Enter an Shipment Date!", Toast.LENGTH_LONG).show();
@@ -100,12 +120,22 @@ public class AddShipmentActivity extends AppCompatActivity {
         }
 
 
-
         Shipment shipment = new Shipment(orderNumber, shipmentNumber, shipmentDate, shipmentTime, shipmentStatus);
+
+        // Checks If the shipment is in update mode
+        if (getIntent().hasExtra("shipment_date")) {
+            shipment.setOrderNumber(orderNumber);
+            shipment.setShipmentNumber(shipmentNumber);
+            addShipmentToDb(shipment);
+            Toast.makeText(this, "Shipment Updated!", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
 
         addShipmentToDb(shipment);
     }
 
+    // A function that adds an shipment to the database
     private void addShipmentToDb(Shipment shipment) {
         String successMessage = "Shipment Successfully Saved\n" + "Order Number: " + shipment.getShipmentNumber();
         String failMessage = "Failed to add order.";
@@ -117,6 +147,7 @@ public class AddShipmentActivity extends AppCompatActivity {
                 }).addOnFailureListener(e -> Toast.makeText(this, failMessage, Toast.LENGTH_SHORT).show());
     }
 
+    // Initialization of the shipment status spinner
     private void loadShipmentStatusSpinner() {
         String[] shipmentStatusValues = new String[]{"Select", "Shipping with the local shipping company",
                 "Left the country of origin", "Received by the airline",
