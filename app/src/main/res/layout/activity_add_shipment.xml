@@ -35,7 +35,10 @@
         android:layout_marginTop="10dp"
         android:hint="@string/shipment_date"
         android:inputType="date"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
+        android:importantForAutofill="no"
+        tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/shipmentTimeEdtTxt"
@@ -46,7 +49,10 @@
         android:layout_marginTop="10dp"
         android:hint="@string/shipment_time"
         android:inputType="datetime"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
+        android:importantForAutofill="no"
+        tools:ignore="VisualLintTextFieldSize" />
 
     <TextView
         android:id="@+id/shipmentStatusTextView"
@@ -84,6 +90,7 @@
         android:layout_marginHorizontal="50dp"
         android:layout_marginTop="40dp"
         android:onClick="saveShipmentClicked"
-        android:text="@string/save" />
+        android:text="@string/save"
+        tools:ignore="VisualLintButtonSize" />
 
 </RelativeLayout>

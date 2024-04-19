@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
@@ -43,7 +44,7 @@ public class AddShipmentActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedShipmentStatus = (String) parent.getItemAtPosition(position);
-                if(!selectedShipmentStatus.equals("Select")) {
+                if (!selectedShipmentStatus.equals("Select")) {
                     shipmentStatus = selectedShipmentStatus;
                 }
             }
@@ -52,6 +53,16 @@ public class AddShipmentActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Toast.makeText(AddShipmentActivity.this,
+                        "Please finish processing the shipment", Toast.LENGTH_LONG).show();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     private void initFields() {
@@ -114,7 +125,7 @@ public class AddShipmentActivity extends AppCompatActivity {
             return;
         }
 
-        if(shipmentStatus.equals("Select")) {
+        if (shipmentStatus.equals("Select")) {
             Toast.makeText(this, "Select an Shipment Status!", Toast.LENGTH_LONG).show();
             return;
         }

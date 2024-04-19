@@ -25,4 +25,5 @@
     <string name="enter_order_number">Enter an order number</string>
     <string name="enter_shipment_number">Enter an shipment number</string>
     <string name="search">Search</string>
+    <string name="welcome_to_tracking_shipment">Welcome To Tracking Shipments</string>
 </resources>

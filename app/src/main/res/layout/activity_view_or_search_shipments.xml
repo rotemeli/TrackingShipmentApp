@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".ViewOrSearchShipmentsActivity">
 
     <EditText
@@ -15,7 +16,10 @@
         android:layout_marginTop="10dp"
         android:hint="@string/enter_shipment_number"
         android:inputType="text"
-        android:minWidth="230dp" />
+        android:minWidth="230dp"
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/searchShipmentBtn"

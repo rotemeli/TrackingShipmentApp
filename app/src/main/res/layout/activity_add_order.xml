@@ -15,7 +15,10 @@
         android:layout_marginTop="20dp"
         android:hint="@string/order_date"
         android:inputType="date"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
+        android:importantForAutofill="no"
+        tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/itemNumberEdtTxt"
@@ -26,7 +29,10 @@
         android:layout_marginTop="10dp"
         android:hint="@string/item_number"
         android:inputType="number"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
+        android:importantForAutofill="no"
+        tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/itemDescriptionEdtTxt"
@@ -37,7 +43,10 @@
         android:layout_marginTop="10dp"
         android:hint="@string/item_description"
         android:inputType="text"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
+        android:importantForAutofill="no"
+        tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/originCountryEdtTxt"
@@ -48,7 +57,10 @@
         android:layout_marginTop="10dp"
         android:hint="@string/origin_country"
         android:inputType="text"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
+        android:importantForAutofill="no"
+        tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/departureDateEdtTxt"
@@ -58,8 +70,11 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:hint="@string/departure_date"
+        android:importantForAutofill="no"
         android:inputType="date"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
+        tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/destinationCountryEdtTxt"
@@ -70,7 +85,10 @@
         android:layout_marginTop="10dp"
         android:hint="@string/destination_country"
         android:inputType="text"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
+        android:importantForAutofill="no"
+        tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/estimatedArrivalDateEdtTxt"
@@ -81,7 +99,10 @@
         android:layout_marginTop="10dp"
         android:hint="@string/estimated_arrival_date"
         android:inputType="date"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
+        android:importantForAutofill="no"
+        tools:ignore="VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/deliveryDateEdtTxt"
@@ -92,7 +113,10 @@
         android:layout_marginTop="10dp"
         android:hint="@string/delivery_date"
         android:inputType="date"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textColorHint="#546E7A"
+        android:importantForAutofill="no"
+        tools:ignore="VisualLintTextFieldSize" />
 
     <TextView
         android:id="@+id/orderStatusTextView"
@@ -130,5 +154,6 @@
         android:layout_marginHorizontal="50dp"
         android:layout_marginTop="30dp"
         android:onClick="saveOrderClicked"
-        android:text="@string/save" />
+        android:text="@string/save"
+        tools:ignore="VisualLintButtonSize" />
 </RelativeLayout>
